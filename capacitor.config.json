@@ -1,0 +1,16 @@
+{
+  "appId": "com.resqnet.community",
+  "appName": "RESQNET",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "Geolocation": {
+      "permissions": {
+        "coarseLocation": "RESQNET uses your location when you choose to add it to a help request.",
+        "location": "RESQNET uses your location when you choose to add it to a help request."
+      }
+    }
+  }
+}

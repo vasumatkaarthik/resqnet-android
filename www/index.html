@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b3a">
+  <title>RESQNET — Community Lifeline</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="RESQNET home">
+        <span class="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 34 10v10c0 9-6 14-14 17C12 34 6 29 6 20V10L20 4Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M20 12v16M12 20h16" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg></span>
+        <span><strong>RESQNET</strong><small>COMMUNITY LIFELINE</small></span>
+      </a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="navigation" aria-label="Main navigation">
+        <button class="nav-item active" data-view="overview"><span>▦</span> Overview</button>
+        <button class="nav-item" data-view="alerts"><span>⚑</span> Emergency alerts <i id="alertNavCount">0</i></button>
+        <button class="nav-item" data-view="requests"><span>＋</span> Community requests</button>
+        <button class="nav-item" data-view="offers"><span>♡</span> Resource offers</button>
+        <button class="nav-item" data-view="volunteers"><span>☼</span> Volunteer portal</button>
+        <button class="nav-item" data-view="messages"><span>▤</span> Messages</button>
+        <button class="nav-item" data-view="devices"><span>⌁</span> Nearby devices</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="offline-note"><span class="status-dot"></span><div><strong>Offline-first</strong><small>Your data stays on this device</small></div></div>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Settings & privacy</button>
+        <div class="sidebar-foot">Built for communities<br>when networks fail.</div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="menuToggle" aria-label="Toggle menu">☰</button>
+        <div class="breadcrumbs">RESQNET <span>/</span> <b id="crumb">Overview</b></div>
+        <div class="topbar-right">
+          <span class="mode-pill"><span class="status-dot amber"></span><span id="modeLabel">Local mode</span></span>
+          <button class="icon-button" id="voiceHelpBtn" title="Voice help" aria-label="Voice help">◖))</button>
+          <button class="avatar" id="profileBtn" title="Edit your profile">U</button>
+        </div>
+      </header>
+
+      <div class="content" id="content">
+        <section class="page-view" data-page="overview">
+          <div class="page-heading">
+            <div><div class="eyebrow">COMMUNITY RESPONSE</div><h1>Community overview</h1><p class="subheading">Local alerts and requests from your community, even when the internet is unavailable.</p></div>
+            <button class="button button-danger" id="openSosTop"><span>＋</span> Send an SOS</button>
+          </div>
+          <div class="notice"><span class="notice-icon">i</span><p><strong>Local mode is active.</strong> Messages are saved on this device. This web demo does not automatically relay messages to other phones; use Demo Mode to explore the workflow.</p><button class="text-button" data-view="devices">Connection details →</button></div>
+          <div class="overview-grid">
+            <section class="panel status-panel">
+              <div class="panel-head"><div><h2>Network status</h2><p>Current device</p></div><span class="tag tag-amber">OFFLINE</span></div>
+              <div class="network-visual"><div class="network-ring"><span class="network-symbol">⌁</span></div><div><strong>Not connected to peers</strong><p>Messages will wait safely until you connect or share them.</p></div></div>
+              <div class="status-stats"><div><span>Saved messages</span><strong id="savedCount">0</strong></div><div><span>Pending delivery</span><strong id="pendingCount">0</strong></div><div><span>Known peers</span><strong>0</strong></div></div>
+              <button class="button button-secondary full-width" data-view="devices">Explore device options</button>
+            </section>
+            <section class="panel sos-panel">
+              <div class="panel-head"><div><h2>Need urgent help?</h2><p>Share an emergency request</p></div><span class="tag tag-red">PRIORITY</span></div>
+              <div class="sos-emblem"><span>!</span></div>
+              <h3>Send a community SOS</h3>
+              <p>Choose the type of help you need. Your alert will be stored locally and shown in this device's alert list.</p>
+              <button class="button button-danger full-width" id="openSos">Create emergency alert</button>
+              <small class="muted">This prototype does not contact emergency services.</small>
+            </section>
+          </div>
+          <div class="section-heading"><div><h2>Recent community activity</h2><p>Alerts and requests saved on this device</p></div><button class="text-button" data-view="alerts">View all →</button></div>
+          <div class="panel list-panel" id="recentActivity"></div>
+          <div class="section-heading"><div><h2>Quick actions</h2><p>What does your community need?</p></div></div>
+          <div class="quick-grid">
+            <button class="quick-action" data-action="request"><span class="quick-icon red">＋</span><span><strong>Request help</strong><small>Ask for supplies or assistance</small></span><b>→</b></button>
+            <button class="quick-action" data-action="offer"><span class="quick-icon green">♡</span><span><strong>Offer resources</strong><small>Share what you can provide</small></span><b>→</b></button>
+            <button class="quick-action" data-action="voice"><span class="quick-icon blue">◖))</span><span><strong>Use voice input</strong><small>Speak in your preferred language</small></span><b>→</b></button>
+          </div>
+          <div class="section-heading"><div><h2>Volunteer portal</h2><p>Available community helpers near your area</p></div><button class="text-button" id="volunteerQuickLink">Open portal →</button></div>
+          <div class="panel volunteer-panel volunteer-list"></div>
+        </section>
+
+        <section class="page-view hidden" data-page="alerts">
+          <div class="page-heading"><div><div class="eyebrow">PRIORITY MESSAGES</div><h1>Emergency alerts</h1><p class="subheading">Urgent alerts saved on this device.</p></div><button class="button button-danger" id="openSosAlerts">＋ Create alert</button></div>
+          <div class="filter-row"><select id="alertFilter" aria-label="Filter alerts"><option value="all">All alerts</option><option value="SOS">SOS</option><option value="MEDICAL">Medical</option><option value="RESCUE">Rescue</option><option value="HAZARD">Hazard</option></select><span class="muted" id="alertSummary">0 alerts</span></div>
+          <div class="panel list-panel" id="alertsList"></div>
+        </section>
+
+        <section class="page-view hidden" data-page="requests">
+          <div class="page-heading"><div><div class="eyebrow">COMMUNITY SUPPORT</div><h1>Community requests</h1><p class="subheading">Record requests for help and keep them visible offline.</p></div><button class="button button-primary" id="newRequest">＋ New request</button></div>
+          <div class="panel list-panel" id="requestsList"></div>
+        </section>
+
+        <section class="page-view hidden" data-page="offers">
+          <div class="page-heading"><div><div class="eyebrow">SHARED RESOURCES</div><h1>Resource offers</h1><p class="subheading">List resources your neighbours may be able to use.</p></div><button class="button button-primary" id="newOffer">＋ Add an offer</button></div>
+          <div class="panel list-panel" id="offersList"></div>
+        </section>
+
+        <section class="page-view hidden" data-page="volunteers">
+          <div class="page-heading"><div><div class="eyebrow">COMMUNITY HELP</div><h1>Volunteer portal</h1><p class="subheading">Match requests with nearby volunteers and confirm the location of support.</p></div></div>
+          <div class="panel map-panel">
+            <div class="map-header"><h2>Responder GPS locations</h2><span id="mapAreaLabel">No responder GPS shared</span></div>
+            <div class="map-surface" id="nearbyMap" aria-label="Nearby volunteers map"></div>
+            <ul class="map-list" id="nearbyMapList"></ul>
+          </div>
+          <div class="panel volunteer-panel volunteer-list"></div>
+        </section>
+
+        <section class="page-view hidden" data-page="messages">
+          <div class="page-heading"><div><div class="eyebrow">LOCAL MESSAGE STORE</div><h1>Messages</h1><p class="subheading">Messages stay on this device until a real transport is connected.</p></div><button class="button button-primary" id="newMessage">＋ Compose</button></div>
+          <div class="panel list-panel" id="messagesList"></div>
+        </section>
+
+        <section class="page-view hidden" data-page="devices">
+          <div class="page-heading"><div><div class="eyebrow">PEER CONNECTIONS</div><h1>Nearby devices</h1><p class="subheading">Review connection options and test the prototype safely.</p></div><span class="tag tag-amber">WEB LIMITATION</span></div>
+          <div class="panel device-panel"><div class="device-icon">⌁</div><h2>Browser-based device connections</h2><p>Web Bluetooth support varies by browser and operating system. It generally requires HTTPS or localhost, user interaction, and compatible devices. Bluetooth discovery in a browser is not a complete multi-hop mesh network.</p><div class="device-actions"><button class="button button-primary" id="demoToggle">Enable demo workflow</button><button class="button button-secondary" id="connectionInfo">Connection requirements</button></div><div id="demoStatus" class="inline-status">Demo workflow is off. No real peer connection is active.</div></div>
+          <div class="section-heading"><div><h2>How message relaying should work</h2><p>For a full offline mesh, use a native Android app with an explicit relay protocol.</p></div></div>
+          <div class="relay-steps"><div><b>01</b><strong>Store</strong><p>Save each incoming message before acknowledging it.</p></div><div><b>02</b><strong>Deduplicate</strong><p>Use unique message IDs to prevent forwarding loops.</p></div><div><b>03</b><strong>Forward</strong><p>Send unseen messages to a connected peer when available.</p></div><div><b>04</b><strong>Confirm</strong><p>Show delivery only after the intended recipient acknowledges it.</p></div></div>
+        </section>
+
+        <section class="page-view hidden" data-page="settings">
+          <div class="page-heading"><div><div class="eyebrow">PREFERENCES</div><h1>Settings & privacy</h1><p class="subheading">Set your profile and voice preferences for this device.</p></div></div>
+          <div class="settings-grid">
+            <form class="panel settings-panel" id="profileForm"><h2>Your profile</h2><p>Used to label messages created on this device.</p><label for="userName">Display name</label><input id="userName" name="userName" placeholder="e.g. Community volunteer" maxlength="50"><label for="userArea">Area or neighbourhood (optional)</label><input id="userArea" name="userArea" placeholder="Enter your area" maxlength="80"><button class="button button-primary" type="submit">Save profile</button></form>
+            <div class="panel settings-panel"><h2>Voice & language</h2><p>Choose a language for speech recognition and spoken responses. Actual support depends on your browser and installed speech services.</p><label for="languageSelect">Preferred language</label><select id="languageSelect"></select><div class="voice-buttons"><button class="button button-secondary" id="testVoice">Test spoken voice</button><button class="button button-secondary" id="stopVoice">Stop speech</button></div><div id="voiceSupport" class="inline-status">Checking browser voice support…</div></div>
+            <div class="panel settings-panel"><h2>AI chat server</h2><p>For the Android app, use the HTTPS address of your deployed RESQNET server. Keep the Gemini key on that server.</p><form id="chatApiForm"><label for="chatApiUrl">Server URL</label><input id="chatApiUrl" type="url" placeholder="https://api.example.com" autocomplete="url"><button class="button button-primary" type="submit">Save server URL</button><div id="chatApiSettingStatus" class="inline-status">Using this app's server.</div></form></div>
+            <div class="panel settings-panel"><h2>Volunteer portal</h2><p>Register a volunteer or rescue team with a location shared from this device.</p><form id="volunteerForm"><label for="volunteerType">Responder type</label><select id="volunteerType"><option>Volunteer</option><option>Rescue team</option></select><label for="volunteerName">Name</label><input id="volunteerName" placeholder="e.g. Ravi Sharma" required><label for="volunteerLocation">Location or area</label><input id="volunteerLocation" placeholder="e.g. Sector 12, Juhu" required><div class="gps-row"><span>Responder GPS</span><button class="button button-secondary" type="button" id="volunteerGpsBtn">Use this device's GPS</button></div><div class="inline-status" id="volunteerGpsStatus" aria-live="polite">GPS coordinates not added.</div><label for="volunteerSkills">Skills</label><input id="volunteerSkills" placeholder="e.g. First aid, food delivery" required><label for="volunteerAvailability">Availability</label><input id="volunteerAvailability" placeholder="e.g. Available now"><label for="volunteerPhone">Phone number</label><input id="volunteerPhone" placeholder="Optional contact"><button class="button button-primary" type="submit">Add responder</button></form></div>
+            <div class="panel settings-panel privacy-panel"><h2>Privacy and storage</h2><p>Messages and profile data are stored in this browser's local storage. They are not automatically uploaded or sent to a server.</p><button class="button button-secondary" id="exportData">Export local data</button><button class="button button-danger-outline" id="clearData">Delete local data</button></div>
+          </div>
+        </section>
+      </div>
+      <footer class="app-footer"><span>RESQNET · Community communication when networks fail</span><span>Prototype · No emergency-service connection</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head"><div><div class="eyebrow" id="modalEyebrow">COMMUNITY</div><h2 id="modalTitle">Create a request</h2></div><button class="icon-button" id="closeModal" aria-label="Close dialog">×</button></div>
+      <form id="entryForm">
+        <label for="entryType">Category</label><select id="entryType" required></select>
+        <label for="entryTitle">Short title</label><input id="entryTitle" maxlength="90" required placeholder="What is needed?">
+        <label for="entryDetails">Details</label><textarea id="entryDetails" rows="4" maxlength="500" placeholder="Add useful details, location landmarks, quantity, or urgency."></textarea>
+        <div class="voice-row"><label for="formLanguage">Voice language</label><select id="formLanguage"></select></div>
+        <div class="gps-row"><label for="entryLocation">Complaint location</label><button class="button button-secondary" type="button" id="gpsLocationBtn">📍 Use live GPS</button></div>
+        <input id="entryLocation" maxlength="120" placeholder="e.g. Gandhi Nagar, Bengaluru or nearest landmark">
+        <div class="voice-buttons"><button class="button button-secondary" type="button" id="voiceTitle">🎙 Speak title</button><button class="button button-secondary" type="button" id="voiceDetails">🎙 Speak details</button><button class="button button-secondary" type="button" id="speakForm">🔊 Read form</button></div>
+        <p class="voice-note" id="voiceNote">Voice recognition availability depends on your browser and selected language. Some browsers require internet for speech recognition.</p>
+        <div class="modal-actions"><button type="button" class="button button-secondary" id="cancelModal">Cancel</button><button type="submit" class="button button-primary" id="saveEntry">Save on this device</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <button class="chat-launcher" id="chatToggle" type="button" aria-label="Open rescue guide" aria-controls="chatPanel" aria-expanded="false"><span aria-hidden="true">✚</span> Rescue guide</button>
+  <section class="chat-panel hidden" id="chatPanel" aria-label="Rescue guide" aria-hidden="true">
+    <header class="chat-header"><div><strong>AI rescue assistant</strong><small id="chatStatus" aria-live="polite">Checking AI service…</small></div><button class="icon-button" id="chatClose" type="button" aria-label="Close rescue guide">×</button></header>
+    <div class="chat-emergency"><p>If anyone is in immediate danger, call local emergency services. In India, call <strong>112</strong>.</p><a href="tel:112">Call 112</a></div>
+    <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
+    <div class="chat-suggestions" id="chatSuggestions"></div>
+    <form class="chat-form" id="chatForm"><input id="chatInput" maxlength="240" placeholder="What is happening?" aria-label="Describe what is happening"><button type="submit" aria-label="Send message">Send</button></form>
+    <button class="chat-sos" id="chatSosBtn" type="button">Prepare a local SOS</button>
+    <p class="chat-disclaimer">Your messages are sent to Google Gemini. Guidance only: this assistant cannot contact responders, see your location, or confirm help is coming.</p>
+  </section>
+  <script src="app.js"></script>
+</body>
+</html>
